@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace E164NumberGenerator
 {
@@ -7,13 +8,20 @@ namespace E164NumberGenerator
         static void Main(string[] args)
         {
             MsidnGenerator MsisdnGenerator = new MsidnGenerator();
-            var result = MsisdnGenerator.GenerateRandomMsisdn(100);
-            
-            foreach (var msisdn in result)
+            var msisdns = MsisdnGenerator.ValidMsisdnList(10);
+            File.Delete("recipients.csv");
+            Console.WriteLine("Valid MSISDNs:");
+            foreach (var msisdn in msisdns)
             {
+                //File.AppendAllText("recipients.csv", $"{{\"address\": {{\"msisdn\": \"{msisdn}\"}}}},\n");
+                File.AppendAllText("recipients.csv", $"{msisdn},\n");
+
                 Console.WriteLine(msisdn);
             }
-            Console.WriteLine(result.Count + " numbers generated");
+            var invalidMsisdn = MsisdnGenerator.InvalidMsisdn();
+            Console.WriteLine();
+            Console.WriteLine("Invalid MSISDN:");
+            Console.WriteLine(invalidMsisdn);
             Console.ReadLine();
         }
     }

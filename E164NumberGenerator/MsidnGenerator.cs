@@ -1,16 +1,39 @@
 ﻿using PhoneNumbers;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace E164NumberGenerator
 {
     class MsidnGenerator
     {
         Random random = new Random();
-        
 
-        public List<string> GenerateRandomMsisdn(int numberOfMsisdns)
+        public string ValidMsisdn()
+        {
+            var randomMsisdn = ("+447" + random.Next(100000000, 999999999));
+
+            while (numberValidator(randomMsisdn) == false)
+            {
+                numberValidator(randomMsisdn);
+            }
+
+            return randomMsisdn;
+        }
+
+        public string InvalidMsisdn()
+        {
+            var randomMsisdn = ("+447" + random.Next(100000000, 999999999));
+
+            while (numberValidator(randomMsisdn) == true)
+            {
+                randomMsisdn = ("+447" + random.Next(100000000, 999999999));
+                numberValidator(randomMsisdn);
+            }
+
+            return randomMsisdn;
+        }
+
+        public List<string> ValidMsisdnList(int numberOfMsisdns)
         {
             List<string> msisdns = new List<string>();
 
