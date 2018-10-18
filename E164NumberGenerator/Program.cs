@@ -8,20 +8,23 @@ namespace E164NumberGenerator
         static void Main(string[] args)
         {
             MsidnGenerator MsisdnGenerator = new MsidnGenerator();
-            var msisdns = MsisdnGenerator.ValidMsisdnList(10);
-            File.Delete("recipients.csv");
-            Console.WriteLine("Valid MSISDNs:");
+            var numberOfMsisdns = 10000;
+            var msisdns = MsisdnGenerator.ValidMsisdnList(numberOfMsisdns);
+            File.Delete($"{numberOfMsisdns} recipients.csv");
+            Console.WriteLine("Generating MSISDNs...");
+            File.AppendAllText($"{numberOfMsisdns} recipients.csv", "msisdn\n");
+            var i = 0;
+
             foreach (var msisdn in msisdns)
             {
                 //File.AppendAllText("recipients.csv", $"{{\"address\": {{\"msisdn\": \"{msisdn}\"}}}},\n");
-                File.AppendAllText("recipients.csv", $"{msisdn},\n");
-
-                Console.WriteLine(msisdn);
+                File.AppendAllText($"{numberOfMsisdns} recipients.csv", $"{msisdn}\n");
+                i++;
+                Console.Write($"\r{i} msisdns generated");
             }
-            var invalidMsisdn = MsisdnGenerator.InvalidMsisdn();
+
             Console.WriteLine();
-            Console.WriteLine("Invalid MSISDN:");
-            Console.WriteLine(invalidMsisdn);
+            Console.WriteLine($"Successfully generated file: {Directory.GetCurrentDirectory()}\\{numberOfMsisdns} recipients.csv");
             Console.ReadLine();
         }
     }
