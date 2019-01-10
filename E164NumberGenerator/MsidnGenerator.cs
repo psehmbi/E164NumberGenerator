@@ -49,6 +49,25 @@ namespace E164NumberGenerator
             return msisdns;
                        
         }
+
+        public List<string> ValidTimeBasedMsisdnList(int numberOfMsisdns)
+        {
+            List<string> msisdns = new List<string>();
+
+            while (msisdns.Count < numberOfMsisdns)
+            {
+                var randomMsisdn = DateTime.UtcNow.ToString("+447" + "ddMMHHmm" + random.Next(0, 9));
+                if (numberValidator(randomMsisdn) == true)
+                {
+                    msisdns.Add(randomMsisdn);
+                }
+            }
+
+            return msisdns;
+
+        }
+
+
         public bool numberValidator(string msisdn)
         {
             var libPhoneNumber = PhoneNumberUtil.GetInstance();
