@@ -8,8 +8,9 @@ namespace E164NumberGenerator
         static void Main(string[] args)
         {
             MsidnGenerator MsisdnGenerator = new MsidnGenerator();
-            var numberOfMsisdns = 50000;
+            var numberOfMsisdns = 5;
             var msisdns = MsisdnGenerator.ValidTimeBasedMsisdnList(numberOfMsisdns);
+
             File.Delete($"{numberOfMsisdns} recipients.csv");
             Console.WriteLine("Generating MSISDNs...");
             File.AppendAllText($"{numberOfMsisdns} recipients.csv", "msisdn\n");
